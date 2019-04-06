@@ -40,7 +40,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 	if (isFullUI)
 		addEntry("CONFIGURE INPUT", 0x777777FF, true, [this] { openConfigInput(); });
 
-	addEntry("QUIT", 0x777777FF, true, [this] {openQuitMenu(); });
+	addEntry("QUIT", 0x777777FF, true, [this] {openQuitInput(); });
 
 	addChild(&mMenu);
 	addVersionInfo();
@@ -460,26 +460,16 @@ void GuiMenu::openConfigInput()
 
 }
 
-void GuiMenu::openQuitMenu()
+void GuiMenu::openQuitInput()
 {
-	auto s = new GuiSettings(mWindow, "QUIT");
-
 	Window* window = mWindow;
-
-	ComponentListRow row;
-	row.elements.clear();
-	row.makeAcceptInputHandler([window] {
-		window->pushGui(new GuiMsgBox(window, "REALLY QUIT?", "YES",
-			[] {
-			SDL_Event ev;
-			ev.type = SDL_QUIT;
-			SDL_PushEvent(&ev);
-		}, "NO", nullptr));
-	});
-	row.addElement(std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-	s->addRow(row);
-
-	mWindow->pushGui(s);
+        window->pushGui(new GuiMsgBox(window, "REALLY QUIT?", "YES",
+		[] {
+		SDL_Event ev;
+		ev.type = SDL_QUIT;
+		SDL_PushEvent(&ev);
+	}, "NO", nullptr)
+	);
 }
 
 void GuiMenu::addVersionInfo()
