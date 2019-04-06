@@ -21,7 +21,7 @@ private:
 	void openCollectionSystemSettings();
 	void openConfigInput();
 	void openOtherSettings();
-	void openQuitMenu();
+	void openQuitInput();
 	void openScraperSettings();
 	void openScreensaverOptions();
 	void openSoundSettings();
